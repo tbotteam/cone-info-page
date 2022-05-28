@@ -18,10 +18,10 @@ export const SUPPORTED_LIST_URLS__NO_ENS = [
 ]
 
 // hide from overview list
-export const TOKEN_BLACKLIST = []
+export const TOKEN_BLACKLIST = ['0x104592a158490a9228070e0a8e5343b499e125d0']
 
 // pair blacklist
-export const PAIR_BLACKLIST = []
+export const PAIR_BLACKLIST = ['0xde251792215fee62f458141db2944283740039ec', '0x0dabcde647ba8d912ce173ce8687b3076a66b0b2', '0xf2f2a88bcf47d1a86ae15fd17098f93152606c3d']
 
 // warnings to display if page contains info about blocked token
 export const BLOCKED_WARNINGS = {}

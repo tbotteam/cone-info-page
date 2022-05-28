@@ -92,6 +92,28 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
   else if (address?.toLowerCase() === '0x39ab6574c289c3ae4d88500eec792ab5b947a5eb'.toLowerCase()) {
     path = dystopialogo
   }
+  else if (address?.toLowerCase() === '0x72bba3aa59a1ccb1591d7cddb714d8e4d5597e96'.toLowerCase()) {
+    path = "https://assets.coingecko.com/coins/images/15006/small/complifi.PNG?1619413977"
+  }
+  else if (address?.toLowerCase() === '0x13748d548d95d78a3c83fe3f32604b4796cffa23'.toLowerCase()) {
+    path = "https://assets.coingecko.com/coins/images/17546/small/koge.PNG?1628204432"
+  }
+  else if (address?.toLowerCase() === '0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4'.toLowerCase()) {
+    path = "https://assets.coingecko.com/coins/images/24185/small/stMATIC.png"
+  }
+  else if (address?.toLowerCase() === '0xf8f9efc0db77d8881500bb06ff5d6abc3070e695'.toLowerCase()) {
+    path = "https://assets.coingecko.com/coins/images/18024/small/syn.png"
+  }
+  else if (address?.toLowerCase() === '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89'.toLowerCase()) {
+    path = "https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/polygon/assets/0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89/logo.png"
+  }
+  else if (address?.toLowerCase() === '0x236eec6359fb44cce8f97e99387aa7f8cd5cde1f'.toLowerCase()) {
+    path = "https://2173993027-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F9HhCCgYexXiRot0OWAJY%2Fuploads%2FQ41zhb0z0oV5WI1zpKEg%2FUSD%2B%20logo.png?alt=media&token=533d9ed9-6904-4f45-82a3-2c9e1060a3b5"
+
+  }
+  else if (address?.toLowerCase() === '0x17e9c5b37283ac5fbe527011cec257b832f03eb3'.toLowerCase()) {
+    path = "https://app.sphere.finance/static/media/sphere_logo_icon.2cbc48ec.svg"
+  }
   else {
     path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${isAddress(
       address
