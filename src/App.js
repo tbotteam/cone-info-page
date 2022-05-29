@@ -17,7 +17,6 @@ import SideNav from './components/SideNav'
 import AccountLookup from './pages/AccountLookup'
 import LocalLoader from './components/LocalLoader'
 import { useLatestBlocks } from './contexts/Application'
-import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
 import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
 
 const AppWrapper = styled.div`
@@ -116,9 +115,9 @@ function App() {
           </WarningWrapper>
         )}
         {globalData &&
-          Object.keys(globalData).length > 0 &&
-          globalChartData &&
-          Object.keys(globalChartData).length > 0 ? (
+        Object.keys(globalData).length > 0 &&
+        globalChartData &&
+        Object.keys(globalChartData).length > 0 ? (
           <BrowserRouter>
             <Switch>
               <Route

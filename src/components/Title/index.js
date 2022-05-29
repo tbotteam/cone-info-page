@@ -6,7 +6,6 @@ import { Flex } from 'rebass'
 import Link from '../Link'
 import { RowFixed } from '../Row'
 import Logo from '../../assets/dystblackloader.svg'
-import Wordmark from '../../assets/wordmark_white.svg'
 
 import { BasicLink } from '../Link'
 import { useMedia } from 'react-use'
@@ -79,17 +78,17 @@ export default function Title() {
               </Option>
             </BasicLink>
 
-            <BasicLink to="/accounts">
-              <Option
-                activeText={
-                  (history.location.pathname.split('/')[1] === 'accounts' ||
-                    history.location.pathname.split('/')[1] === 'account') ??
-                  undefined
-                }
-              >
-                Accounts
-              </Option>
-            </BasicLink>
+            {/*<BasicLink to="/accounts">*/}
+            {/*  <Option*/}
+            {/*    activeText={*/}
+            {/*      (history.location.pathname.split('/')[1] === 'accounts' ||*/}
+            {/*        history.location.pathname.split('/')[1] === 'account') ??*/}
+            {/*      undefined*/}
+            {/*    }*/}
+            {/*  >*/}
+            {/*    Accounts*/}
+            {/*  </Option>*/}
+            {/*</BasicLink>*/}
           </RowFixed>
         )}
       </Flex>

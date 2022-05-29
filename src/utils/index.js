@@ -48,7 +48,8 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
     return (
       `https://dystopia.exchange/#/` +
       (remove ? `remove` : `add`) +
-      `/${token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address}/${token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address
+      `/${token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address}/${
+        token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address
       }`
     )
   }
@@ -58,8 +59,9 @@ export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
     return `https://dystopia.exchange/#/swap?inputCurrency=${token0Address}`
   } else {
-    return `https://dystopia.exchange/#/swap?inputCurrency=${token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address
-      }&outputCurrency=${token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address}`
+    return `https://dystopia.exchange/#/swap?inputCurrency=${
+      token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address
+    }&outputCurrency=${token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address}`
   }
 }
 

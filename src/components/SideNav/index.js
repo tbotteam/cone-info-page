@@ -147,18 +147,18 @@ function SideNav({ history }) {
                   </Option>
                 </BasicLink>
 
-                <BasicLink to="/accounts">
-                  <Option
-                    activeText={
-                      (history.location.pathname.split('/')[1] === 'accounts' ||
-                        history.location.pathname.split('/')[1] === 'account') ??
-                      undefined
-                    }
-                  >
-                    <List size={20} style={{ marginRight: '.75rem' }} />
-                    Accounts
-                  </Option>
-                </BasicLink>
+                {/*<BasicLink to="/accounts">*/}
+                {/*  <Option*/}
+                {/*    activeText={*/}
+                {/*      (history.location.pathname.split('/')[1] === 'accounts' ||*/}
+                {/*        history.location.pathname.split('/')[1] === 'account') ??*/}
+                {/*      undefined*/}
+                {/*    }*/}
+                {/*  >*/}
+                {/*    <List size={20} style={{ marginRight: '.75rem' }} />*/}
+                {/*    Accounts*/}
+                {/*  </Option>*/}
+                {/*</BasicLink>*/}
               </AutoColumn>
             )}
           </AutoColumn>

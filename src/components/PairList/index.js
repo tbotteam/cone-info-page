@@ -14,7 +14,7 @@ import DoubleTokenLogo from '../DoubleLogo'
 import FormattedName from '../FormattedName'
 import QuestionHelper from '../QuestionHelper'
 import { TYPE } from '../../Theme'
-import {FEE, PAIR_BLACKLIST} from '../../constants'
+import { FEE, PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
 
 dayjs.extend(utc)
@@ -170,7 +170,6 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
   const ListItem = ({ pairAddress, index }) => {
     const pairData = pairs[pairAddress]
-    console.log(pairData, "hello")
 
     if (pairData && pairData.token0 && pairData.token1) {
       const liquidity = formattedNum(
@@ -185,7 +184,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
 
       const apy = formattedPercent(
         ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * FEE * 365 * 100) /
-        (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
+          (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
       )
 
       const weekVolume = formattedNum(
@@ -209,12 +208,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
               margin={!below740}
             />
             <CustomLink style={{ marginLeft: '20px', whiteSpace: 'nowrap' }} to={'/pair/' + pairAddress} color={color}>
-              <FormattedName
-                text={pairData.symbol}
-                maxCharacters={below600 ? 8 : 16}
-                adjustSize={true}
-                link={true}
-              />
+              <FormattedName text={pairData.symbol} maxCharacters={below600 ? 8 : 16} adjustSize={true} link={true} />
             </CustomLink>
           </DataText>
           <DataText area="liq">{formatDataText(liquidity, pairData.trackedReserveUSD)}</DataText>

@@ -7,7 +7,7 @@ import { formattedNum, localNumber } from '../../utils'
 
 import UniPrice from '../UniPrice'
 import { TYPE } from '../../Theme'
-import {FEE} from "../../constants";
+import { FEE } from '../../constants'
 
 const Header = styled.div`
   width: 100%;

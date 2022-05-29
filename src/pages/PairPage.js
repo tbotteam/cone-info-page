@@ -37,12 +37,7 @@ import { Bookmark, PlusCircle, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import {
-  UNTRACKED_COPY,
-  PAIR_BLACKLIST,
-  BLOCKED_WARNINGS,
-  FEE
-} from '../constants'
+import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS, FEE } from '../constants'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -208,9 +203,10 @@ function PairPage({ pairAddress, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[pairAddress] ?? `This pair is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://polygonscan.com//address/' + pairAddress}>{`More about ${shortenAddress(
-              pairAddress
-            )}`}</Link>
+            <Link
+              external={true}
+              href={'https://polygonscan.com//address/' + pairAddress}
+            >{`More about ${shortenAddress(pairAddress)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
       </BlockedWrapper>
