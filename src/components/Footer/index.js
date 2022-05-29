@@ -5,7 +5,7 @@ import Link from '../Link'
 
 const links = [
   { url: 'https://dystopia.exchange', text: 'About' },
-  { url: 'https://docs.dystopia.io/', text: 'Docs' },
+  { url: 'https://docs.dystopia.exchange', text: 'Docs' },
   { url: 'https://github.com/dystopia-exchange', text: 'Code' },
 ]
 

@@ -169,7 +169,7 @@ function SideNav({ history }) {
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://docs.dystopia.io" target="_blank">
+              <Link href="https://docs.dystopia.exchange" target="_blank">
                 Docs
               </Link>
             </HeaderText>
