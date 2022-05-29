@@ -24,6 +24,11 @@ const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false
     return ''
   }
 
+
+  text = text.replace('sAMM-', 's-')
+  text = text.replace('vAMM-', 'v-')
+  text = text.replace('miMATIC', 'MAI')
+
   if (text.length > maxCharacters) {
     return (
       <Tooltip text={text} show={showHover}>
