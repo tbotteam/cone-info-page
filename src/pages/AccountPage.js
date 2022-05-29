@@ -16,7 +16,7 @@ import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import { Bookmark, Activity } from 'react-feather'
 import Link from '../components/Link'
-import { FEE_WARNING_TOKENS } from '../constants'
+import {FEE, FEE_WARNING_TOKENS} from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
@@ -356,7 +356,7 @@ function AccountPage({ account }) {
               </AutoColumn>
               <AutoColumn gap="8px">
                 <TYPE.header fontSize={24}>
-                  {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.001, true) : '-'}
+                  {totalSwappedUSD ? formattedNum(totalSwappedUSD * FEE, true) : '-'}
                 </TYPE.header>
                 <TYPE.main>Total Fees Paid</TYPE.main>
               </AutoColumn>

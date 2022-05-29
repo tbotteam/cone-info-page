@@ -17,7 +17,7 @@ const theme = (darkMode, color) => ({
   panelColor: darkMode ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)',
   backgroundColor: darkMode ? '#212429' : '#F7F8FA',
 
-  uniswapPink: darkMode ? '#686DF1' : 'black',
+  uniswapPink: darkMode ? '#085f8e' : 'black',
 
   concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
   inputBackground: darkMode ? '#1F1F1F' : '#FAFAFA',
@@ -48,21 +48,21 @@ const theme = (darkMode, color) => ({
   divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
   //primary colors
-  primary1: darkMode ? '#686DF1' : '#686DF1',
+  primary1: darkMode ? '#085f8e' : '#085f8e',
   primary2: darkMode ? '#04A8F0' : '#04A8F0',
   primary3: darkMode ? '#D8E2FF' : '#D8E2FF',
   primary4: darkMode ? '#376bad70' : '#D8E2FF',
   primary5: darkMode ? '#153d6f70' : '#D8E2FF',
 
   // color text
-  primaryText1: darkMode ? '#686DF1' : '#686DF1',
+  primaryText1: darkMode ? '#085f8e' : '#085f8e',
 
   // secondary colors
-  secondary1: darkMode ? '#2172E5' : '#686DF1',
+  secondary1: darkMode ? '#2172E5' : '#085f8e',
   secondary2: darkMode ? '#17000b26' : '#D8E2FF',
   secondary3: darkMode ? '#17000b26' : '#D8E2FF',
 
-  shadow1: darkMode ? '#000' : '#686DF1',
+  shadow1: darkMode ? '#000' : '#085f8e',
 
   // other
   red1: '#FF6871',
@@ -72,7 +72,7 @@ const theme = (darkMode, color) => ({
   link: '#2172E5',
   blue: '2f80ed',
 
-  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #686DF130 0%, #fff 0%)`,
+  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #085f8e 0%, #fff 0%)`,
 })
 
 const TextWrapper = styled(Text)`

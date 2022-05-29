@@ -1,7 +1,7 @@
 {
-  "name": "@dystopiaSwap/info",
+  "name": "dystopia-exchange-info",
   "private": true,
-  "homepage": "https://dystopia-info.dystopia.exchange",
+  "homepage": "https://info.dystopia.exchange",
   "devDependencies": {
     "@popperjs/core": "^2.4.2",
     "@reach/portal": "^0.10.3",

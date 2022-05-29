@@ -26,6 +26,7 @@ interface Position {
   reserveUSD: number
   token0PriceUSD: number
   token1PriceUSD: number
+  cumulativeFeeUSD: number
 }
 
 const PRICE_DISCOVERY_START_TIMESTAMP = 1634803725
@@ -119,8 +120,6 @@ export function getMetricsForPositionWindow(positionT0: Position, positionT1: Po
   const token1_amount_t0 = t0Ownership * positionT0.reserve1
 
   // get current token values
-  const token0_amount_t1 = t1Ownership * positionT1.reserve0
-  const token1_amount_t1 = t1Ownership * positionT1.reserve1
 
   // calculate squares to find imp loss and fee differences
   const sqrK_t0 = Math.sqrt(token0_amount_t0 * token1_amount_t0)
@@ -133,10 +132,8 @@ export function getMetricsForPositionWindow(positionT0: Position, positionT1: Po
   const no_fees_usd =
     token0_amount_no_fees * positionT1.token0PriceUSD + token1_amount_no_fees * positionT1.token1PriceUSD
 
-  const difference_fees_token0 = token0_amount_t1 - token0_amount_no_fees
-  const difference_fees_token1 = token1_amount_t1 - token1_amount_no_fees
-  const difference_fees_usd =
-    difference_fees_token0 * positionT1.token0PriceUSD + difference_fees_token1 * positionT1.token1PriceUSD
+  // const difference_fees_usd = positionT1.cumulativeFeeUSD - positionT0.cumulativeFeeUSD
+  const difference_fees_usd = 0
 
   // calculate USD value at t0 and t1 using initial token deposit amounts for asset return
   const assetValueT0 = token0_amount_t0 * positionT0.token0PriceUSD + token1_amount_t0 * positionT0.token1PriceUSD
@@ -279,6 +276,7 @@ export async function getLPReturnsOnPair(user: string, pair, ethPrice: number, s
     reserveUSD: pair.reserveUSD,
     token0PriceUSD: pair.token0.derivedETH * ethPrice,
     token1PriceUSD: pair.token1.derivedETH * ethPrice,
+    cumulativeFeeUSD: pair.cumulativeFeeUSD,
   }
 
   for (const index in snapshots) {

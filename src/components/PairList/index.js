@@ -14,7 +14,7 @@ import DoubleTokenLogo from '../DoubleLogo'
 import FormattedName from '../FormattedName'
 import QuestionHelper from '../QuestionHelper'
 import { TYPE } from '../../Theme'
-import { PAIR_BLACKLIST } from '../../constants'
+import {FEE, PAIR_BLACKLIST} from '../../constants'
 import { AutoColumn } from '../Column'
 
 dayjs.extend(utc)
@@ -184,7 +184,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       )
 
       const apy = formattedPercent(
-        ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * 0.001 * 365 * 100) /
+        ((pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD : pairData.oneDayVolumeUntracked) * FEE * 365 * 100) /
         (pairData.oneDayVolumeUSD ? pairData.trackedReserveUSD : pairData.reserveUSD)
       )
 
@@ -194,7 +194,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       )
 
       const fees = formattedNum(
-        pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * 0.001 : pairData.oneDayVolumeUntracked * 0.001,
+        pairData.oneDayVolumeUSD ? pairData.oneDayVolumeUSD * FEE : pairData.oneDayVolumeUntracked * FEE,
         true
       )
 
@@ -243,8 +243,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         const pairA = pairs[addressA]
         const pairB = pairs[addressB]
         if (sortedColumn === SORT_FIELD.APY) {
-          const apy0 = parseFloat(pairA.oneDayVolumeUSD * 0.001 * 356 * 100) / parseFloat(pairA.reserveUSD)
-          const apy1 = parseFloat(pairB.oneDayVolumeUSD * 0.001 * 356 * 100) / parseFloat(pairB.reserveUSD)
+          const apy0 = parseFloat(pairA.oneDayVolumeUSD * FEE * 356 * 100) / parseFloat(pairA.reserveUSD)
+          const apy1 = parseFloat(pairB.oneDayVolumeUSD * FEE * 356 * 100) / parseFloat(pairB.reserveUSD)
           return apy0 > apy1 ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
         }
         return parseFloat(pairA[FIELD_TO_VALUE(sortedColumn, useTracked)]) >

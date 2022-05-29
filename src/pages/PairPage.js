@@ -37,7 +37,12 @@ import { Bookmark, PlusCircle, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
+import {
+  UNTRACKED_COPY,
+  PAIR_BLACKLIST,
+  BLOCKED_WARNINGS,
+  FEE
+} from '../constants'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -154,12 +159,12 @@ function PairPage({ pairAddress, history }) {
 
   const showUSDWaning = usingUntrackedLiquidity | usingUtVolume
 
-  // get fees	  // get fees
+  // get fees
   const fees =
     oneDayVolumeUSD || oneDayVolumeUSD === 0
       ? usingUtVolume
-        ? formattedNum(oneDayVolumeUntracked * 0.001, true)
-        : formattedNum(oneDayVolumeUSD * 0.001, true)
+        ? formattedNum(oneDayVolumeUntracked * FEE, true)
+        : formattedNum(oneDayVolumeUSD * FEE, true)
       : '-'
 
   // token data for usd

@@ -263,6 +263,7 @@ export const USER_POSITIONS = gql`
           derivedETH
         }
         totalSupply
+        cumulativeFeeUSD
       }
       liquidityTokenBalance
     }
