@@ -13,10 +13,13 @@ export const timeframeOptions = {
 }
 
 // hide from overview list
-export const TOKEN_BLACKLIST = ['']
+export const TOKEN_BLACKLIST = ['0x17e9c5b37283ac5fbe527011cec257b832f03eb3']
 
 // pair blacklist
-export const PAIR_BLACKLIST = ['']
+export const PAIR_BLACKLIST = [
+  '0xafe0f3193506e0d9bcdd9bcffc50aef86441d393',
+  '0x2604d2335670bf8f28a254162fecd91dccd702c8',
+]
 
 // warnings to display if page contains info about blocked token
 export const BLOCKED_WARNINGS = {}
