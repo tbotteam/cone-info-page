@@ -3,7 +3,7 @@ import { BUNDLE_ID } from '../constants'
 
 export const SUBGRAPH_HEALTH = gql`
   query health {
-    indexingStatusForCurrentVersion(subgraphName: "dystopia-exchange/dystopia-v2") {
+    indexingStatusForCurrentVersion(subgraphName: "cone-exchange/cone") {
       synced
       health
       chains {

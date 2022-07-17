@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia-v2',
+    uri: 'https://api.thegraph.com/subgraphs/name/belbix/distopia-v3',
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -18,17 +18,17 @@ export const healthClient = new ApolloClient({
   shouldBatch: true,
 })
 
-export const stakingClient = new ApolloClient({
-  link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/way2rach/talisman',
-  }),
-  cache: new InMemoryCache(),
-  shouldBatch: true,
-})
+// export const stakingClient = new ApolloClient({
+//   link: new HttpLink({
+//     uri: 'https://api.thegraph.com/subgraphs/name/way2rach/talisman',
+//   }),
+//   cache: new InMemoryCache(),
+//   shouldBatch: true,
+// })
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/elkfinance/matic-blocks',
+    uri: 'https://api.thegraph.com/subgraphs/name/kybernetwork/bsc-blocks',
   }),
   cache: new InMemoryCache(),
 })

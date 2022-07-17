@@ -164,22 +164,23 @@ function SideNav({ history }) {
           </AutoColumn>
           <AutoColumn gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
             <HeaderText>
-              <Link href="https://dystopia.exchange" target="_blank">
-                Dystopia.exchange
+              <Link href="https://cone.exchange" target="_blank">
+                cone.exchange
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://docs.dystopia.exchange" target="_blank">
+              <Link href="https://docs.cone.exchange" target="_blank">
                 Docs
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://discord.com/invite/gNMqms9H27" target="_blank">
+              {/*todo*/}
+              <Link href="https://discord.com/" target="_blank">
                 Discord
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://twitter.com/dystopiaswap" target="_blank">
+              <Link href="https://twitter.com/coneswap" target="_blank">
                 Twitter
               </Link>
             </HeaderText>

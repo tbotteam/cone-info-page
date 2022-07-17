@@ -40,7 +40,7 @@ const LocalLoader = ({ fill }) => {
     <Wrapper fill={fill}>
       <AnimatedImg>
         <img
-          src={require(darkMode ? '../../assets/dino.png' : '../../assets/dystblackloader.svg')}
+          src={require(darkMode ? '../../assets/full_logo_green.svg' : '../../assets/full_logo_green.svg')}
           alt="loading-icon"
         />
       </AnimatedImg>

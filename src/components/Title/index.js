@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 import Link from '../Link'
 import { RowFixed } from '../Row'
-import Logo from '../../assets/dystblackloader.svg'
+import Logo from '../../assets/full_logo_green.svg'
 
 import { BasicLink } from '../Link'
 import { useMedia } from 'react-use'

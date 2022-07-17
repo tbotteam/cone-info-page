@@ -1,7 +1,7 @@
 {
-  "name": "dystopia-exchange-info",
+  "name": "cone-exchange-info",
   "private": true,
-  "homepage": "https://info.dystopia.exchange",
+  "homepage": "https://info.cone.exchange",
   "devDependencies": {
     "@popperjs/core": "^2.4.2",
     "@reach/portal": "^0.10.3",
