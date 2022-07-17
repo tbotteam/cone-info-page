@@ -1,9 +1,9 @@
 import gql from 'graphql-tag'
-import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
+import { BUNDLE_ID } from '../constants'
 
 export const SUBGRAPH_HEALTH = gql`
   query health {
-    indexingStatusForCurrentVersion(subgraphName: "tetu-io/tetu-swap") {
+    indexingStatusForCurrentVersion(subgraphName: "dystopia-exchange/dystopia-v2") {
       synced
       health
       chains {
@@ -410,7 +410,7 @@ export const GLOBAL_DATA = (block) => {
   const queryString = ` query uniswapFactories {
       uniswapFactories(
        ${block ? `block: { number: ${block}}` : ``} 
-       where: { id: "${FACTORY_ADDRESS}" }) {
+       first: 1) {
         id
         totalVolumeUSD
         totalVolumeETH

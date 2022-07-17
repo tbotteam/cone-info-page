@@ -12,6 +12,7 @@ import umaLogo from '../../assets/uma.png'
 import clamLogo from '../../assets/clam.png'
 import tetuQiLogo from '../../assets/tetuQi.svg'
 import dystopialogo from '../../assets/dystopialogo.png'
+import DEFAULT_TOKEN_LIST from '../../constants/token_list.json'
 
 const BAD_IMAGES = {}
 
@@ -95,9 +96,13 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
   } else if (address?.toLowerCase() === '0x17e9c5b37283ac5fbe527011cec257b832f03eb3'.toLowerCase()) {
     path = 'https://app.sphere.finance/static/media/sphere_logo_icon.2cbc48ec.svg'
   } else {
-    path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${isAddress(
-      address
-    )}/logo.png`
+    const list = DEFAULT_TOKEN_LIST.tokens.filter((x) => x.address.toLowerCase() === address.toLowerCase())
+    path =
+      list.length > 0
+        ? list[0].logoURI
+        : `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${isAddress(
+            address
+          )}/logo.png`
   }
 
   return (

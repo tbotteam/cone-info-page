@@ -164,6 +164,30 @@
       "symbol": "tetuQi",
       "decimals": 18,
       "logoURI": "https://app.tetu.io/static/media/tetuQi.0b0d39ac.svg"
+    },
+    {
+      "address": "0x62f594339830b90ae4c084ae7d223ffafd9658a7",
+      "chainId": 137,
+      "name": "Sphere Finance",
+      "symbol": "SPHERE",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/24424/small/2iR2JsL.png"
+    },
+    {
+      "address": "0x9008d70a5282a936552593f410abcbce2f891a97",
+      "chainId": 137,
+      "name": "Penrose Finance",
+      "symbol": "PEN",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/26105/small/6iWxdkG.png"
+    },
+    {
+      "address": "0x1a3acf6d19267e2d3e7f898f42803e90c9219062",
+      "chainId": 137,
+      "name": "0x1a3acf6d19267e2d3e7f898f42803e90c9219062",
+      "symbol": "FXS",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/13423/small/frax_share.png"
     }
   ]
 }

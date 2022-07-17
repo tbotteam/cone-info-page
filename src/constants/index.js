@@ -1,5 +1,3 @@
-export const FACTORY_ADDRESS = '0x1d21Db6cde1b18c7E47B0F7F42f4b3F68b9beeC9'
-
 export const BUNDLE_ID = '1'
 export const FEE = 0.00025
 
