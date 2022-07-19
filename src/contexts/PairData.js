@@ -638,7 +638,7 @@ export function usePairChartData(pairAddress) {
 }
 
 /**
- * Get list of all pairs in DystopiaSwap
+ * Get list of all pairs
  */
 export function useAllPairData() {
   const [state] = usePairDataContext()

@@ -8,7 +8,7 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { timeframeOptions } from '../constants'
+import { timeframeOptions, WBNB, NETWORK_TOKEN_NAME } from '../constants'
 import Numeral from 'numeral'
 
 // format libraries
@@ -40,16 +40,16 @@ export function getTimeframe(timeWindow) {
 export function getPoolLink(token0Address, token1Address = null, remove = false) {
   if (!token1Address) {
     return (
-      `https://dystopia.exchange/#/` +
+      `https://cone.exchange/#/` +
       (remove ? `remove` : `add`) +
-      `/${token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address}/${'MATIC'}`
+      `/${token0Address === WBNB ? NETWORK_TOKEN_NAME : token0Address}/${NETWORK_TOKEN_NAME}`
     )
   } else {
     return (
-      `https://dystopia.exchange/#/` +
+      `https://cone.exchange/#/` +
       (remove ? `remove` : `add`) +
-      `/${token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address}/${
-        token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address
+      `/${token0Address === WBNB ? NETWORK_TOKEN_NAME : token0Address}/${
+        token1Address === WBNB ? NETWORK_TOKEN_NAME : token1Address
       }`
     )
   }
@@ -57,21 +57,21 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
 
 export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
-    return `https://dystopia.exchange/#/swap?inputCurrency=${token0Address}`
+    return `https://cone.exchange/#/swap?inputCurrency=${token0Address}`
   } else {
-    return `https://dystopia.exchange/#/swap?inputCurrency=${
-      token0Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token0Address
-    }&outputCurrency=${token1Address === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' ? 'MATIC' : token1Address}`
+    return `https://cone.exchange/#/swap?inputCurrency=${
+      token0Address === WBNB ? NETWORK_TOKEN_NAME : token0Address
+    }&outputCurrency=${token1Address === WBNB ? NETWORK_TOKEN_NAME : token1Address}`
   }
 }
 
 export function getDAppLink(linkVariable) {
-  let baseUniswapUrl = 'https://dystopia.exchange/#/uni'
+  let baseUniswapUrl = 'https://cone.exchange'
   if (!linkVariable) {
     return baseUniswapUrl
   }
 
-  return `${baseUniswapUrl}/ETH/${linkVariable}`
+  return `${baseUniswapUrl}/${linkVariable}`
 }
 
 export function localNumber(val) {

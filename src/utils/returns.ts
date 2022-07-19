@@ -2,11 +2,7 @@ import { USER_MINTS_BUNRS_PER_PAIR } from '../apollo/queries'
 import { client } from '../apollo/client'
 import dayjs from 'dayjs'
 import { getShareValueOverTime } from '.'
-
-export const priceOverrides = [
-  '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
-  '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', // DAI
-]
+import { PRICE_OVERRIDES } from '../constants'
 
 interface ReturnMetrics {
   hodleReturn: number // difference in asset values t0 -> t1 with t0 deposit amounts
@@ -33,19 +29,12 @@ const PRICE_DISCOVERY_START_TIMESTAMP = 1634803725
 
 function formatPricesForEarlyTimestamps(position): Position {
   if (position.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
-    if (priceOverrides.includes(position?.pair?.token0.id)) {
+    if (PRICE_OVERRIDES.includes(position?.pair?.token0.id)) {
       position.token0PriceUSD = 1
     }
-    if (priceOverrides.includes(position?.pair?.token1.id)) {
+    if (PRICE_OVERRIDES.includes(position?.pair?.token1.id)) {
       position.token1PriceUSD = 1
     }
-    // // WMATIC price
-    // if (position.pair?.token0.id === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270') {
-    //   position.token0PriceUSD = 203
-    // }
-    // if (position.pair?.token1.id === '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270') {
-    //   position.token1PriceUSD = 203
-    // }
   }
   return position
 }
@@ -68,9 +57,9 @@ async function getPrincipalForUserPerPair(user: string, pairAddress: string) {
     const mintToken1 = mint.pair.token1.id
 
     // if trackign before prices were discovered (pre-launch days), hardcode stablecoins
-    if (priceOverrides.includes(mintToken0) && mint.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
+    if (PRICE_OVERRIDES.includes(mintToken0) && mint.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
       usd += parseFloat(mint.amount0) * 2
-    } else if (priceOverrides.includes(mintToken1) && mint.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
+    } else if (PRICE_OVERRIDES.includes(mintToken1) && mint.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
       usd += parseFloat(mint.amount1) * 2
     } else {
       usd += parseFloat(mint.amountUSD)
@@ -85,9 +74,9 @@ async function getPrincipalForUserPerPair(user: string, pairAddress: string) {
     const burnToken1 = burn.pair.token1.id
 
     // if trackign before prices were discovered (pre-launch days), hardcode stablecoins
-    if (priceOverrides.includes(burnToken0) && burn.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
+    if (PRICE_OVERRIDES.includes(burnToken0) && burn.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
       usd += parseFloat(burn.amount0) * 2
-    } else if (priceOverrides.includes(burnToken1) && burn.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
+    } else if (PRICE_OVERRIDES.includes(burnToken1) && burn.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
       usd += parseFloat(burn.amount1) * 2
     } else {
       usd -= parseFloat(burn.amountUSD)
