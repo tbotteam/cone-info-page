@@ -31,7 +31,12 @@ import { PlusCircle, Bookmark, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
+import {
+  UNTRACKED_COPY,
+  TOKEN_BLACKLIST,
+  BLOCKED_WARNINGS,
+  NETWORK_SCAN
+} from '../constants'
 import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
@@ -179,9 +184,10 @@ function TokenPage({ address, history }) {
             <TYPE.light style={{ textAlign: 'center' }}>
               {BLOCKED_WARNINGS[address] ?? `This token is not supported.`}
             </TYPE.light>
-            <Link external={true} href={'https://polygonscan.com//address/' + address}>{`More about ${shortenAddress(
-              address
-            )}`}</Link>
+            <Link
+              external={true}
+              href={'https://' + NETWORK_SCAN + '/address/' + address}
+            >{`More about ${shortenAddress(address)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
       </BlockedWrapper>
@@ -207,7 +213,7 @@ function TokenPage({ address, history }) {
               style={{ width: 'fit-content' }}
               color={backgroundColor}
               external
-              href={'https://polygonscan.com//address/' + address}
+              href={'https://' + NETWORK_SCAN + '/address/' + address}
             >
               <Text style={{ marginLeft: '.15rem' }} fontSize={'14px'} fontWeight={400}>
                 ({address.slice(0, 8) + '...' + address.slice(36, 42)})
@@ -420,8 +426,8 @@ function TokenPage({ address, history }) {
                     </AutoRow>
                   </Column>
                   <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://polygonscan.com//address/' + address}>
-                      View on Polygonscan ↗
+                    <Link color={backgroundColor} external href={'https://' + NETWORK_SCAN + '/address/' + address}>
+                      View on bscscan ↗
                     </Link>
                   </ButtonLight>
                 </TokenDetailsLayout>

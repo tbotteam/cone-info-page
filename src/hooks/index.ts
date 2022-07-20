@@ -8,7 +8,7 @@ import copy from 'copy-to-clipboard'
 export function useColor(tokenAddress, token) {
   const [color, setColor] = useState('#2172E5')
   if (tokenAddress) {
-    const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${isAddress(
+    const path = `https://raw.githubusercontent.com/cone-exchange/token-list/main/lists/images/${isAddress(
       tokenAddress
     )}/logo.png`
     if (path) {

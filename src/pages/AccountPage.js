@@ -16,7 +16,7 @@ import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import { Bookmark, Activity } from 'react-feather'
 import Link from '../components/Link'
-import { FEE, FEE_WARNING_TOKENS } from '../constants'
+import {FEE, FEE_WARNING_TOKENS, NETWORK_SCAN} from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
@@ -166,7 +166,7 @@ function AccountPage({ account }) {
         <RowBetween>
           <TYPE.body>
             <BasicLink to="/accounts">{'Accounts '}</BasicLink>→{' '}
-            <Link lineHeight={'145.23%'} href={'https://polygonscan.com//address/' + account} target="_blank">
+            <Link lineHeight={'145.23%'} href={'https://' + NETWORK_SCAN + '/address/' + account} target="_blank">
               {' '}
               {account?.slice(0, 42)}{' '}
             </Link>
@@ -177,8 +177,8 @@ function AccountPage({ account }) {
           <RowBetween>
             <span>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
-              <Link lineHeight={'145.23%'} href={'https://polygonscan.com//address/' + account} target="_blank">
-                <TYPE.main fontSize={14}>View on Polygonscan</TYPE.main>
+              <Link lineHeight={'145.23%'} href={'https://' + NETWORK_SCAN + '/address/' + account} target="_blank">
+                <TYPE.main fontSize={14}>View on bscscan</TYPE.main>
               </Link>
             </span>
             <AccountWrapper>

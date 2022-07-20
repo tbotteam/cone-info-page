@@ -10,6 +10,8 @@ export const timeframeOptions = {
   ALL_TIME: 'All time',
 }
 
+export const NETWORK_SCAN = 'bscscan.com'
+
 export const WBNB = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
 export const NETWORK_TOKEN_NAME = 'BNB'
 

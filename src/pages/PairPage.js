@@ -37,7 +37,13 @@ import { Bookmark, PlusCircle, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS, FEE } from '../constants'
+import {
+  UNTRACKED_COPY,
+  PAIR_BLACKLIST,
+  BLOCKED_WARNINGS,
+  FEE,
+  NETWORK_SCAN
+} from '../constants'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -205,7 +211,7 @@ function PairPage({ pairAddress, history }) {
             </TYPE.light>
             <Link
               external={true}
-              href={'https://polygonscan.com//address/' + pairAddress}
+              href={'https://' + NETWORK_SCAN + '/address/' + pairAddress}
             >{`More about ${shortenAddress(pairAddress)}`}</Link>
           </AutoColumn>
         </BlockedMessageWrapper>
@@ -501,8 +507,8 @@ function PairPage({ pairAddress, history }) {
                     </AutoRow>
                   </Column>
                   <ButtonLight color={backgroundColor}>
-                    <Link color={backgroundColor} external href={'https://polygonscan.com//address/' + pairAddress}>
-                      View on Polygonscan ↗
+                    <Link color={backgroundColor} external href={'https://' + NETWORK_SCAN + '/address/' + pairAddress}>
+                      View on bscscan ↗
                     </Link>
                   </ButtonLight>
                 </TokenDetailsLayout>

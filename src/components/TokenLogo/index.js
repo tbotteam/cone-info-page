@@ -44,7 +44,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     path =
       list.length > 0
         ? list[0].logoURI
-        : `https://raw.githubusercontent.com/pancakeswap/token-list/main/lists/images/${isAddress(
+        : `https://raw.githubusercontent.com/cone-exchange/token-list/main/lists/images/${isAddress(
             address
           )}/logo.png`
   }

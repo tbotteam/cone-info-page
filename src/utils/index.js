@@ -8,7 +8,12 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { timeframeOptions, WBNB, NETWORK_TOKEN_NAME } from '../constants'
+import {
+  timeframeOptions,
+  WBNB,
+  NETWORK_TOKEN_NAME,
+  NETWORK_SCAN
+} from '../constants'
 import Numeral from 'numeral'
 
 // format libraries
@@ -299,10 +304,10 @@ export const setThemeColor = (theme) => document.documentElement.style.setProper
 export const Big = (number) => new BigNumber(number)
 
 export const urls = {
-  showTransaction: (tx) => `https://polygonscan.com/tx/${tx}/`,
-  showAddress: (address) => `https://polygonscan.com/address/${address}/`,
-  showToken: (address) => `https://polygonscan.com/token/${address}/`,
-  showBlock: (block) => `https://polygonscan.com/block/${block}/`,
+  showTransaction: (tx) => `https://${NETWORK_SCAN}/tx/${tx}/`,
+  showAddress: (address) => `https://${NETWORK_SCAN}/address/${address}/`,
+  showToken: (address) => `https://${NETWORK_SCAN}/token/${address}/`,
+  showBlock: (block) => `https://${NETWORK_SCAN}/block/${block}/`,
 }
 
 export const formatTime = (unix) => {
