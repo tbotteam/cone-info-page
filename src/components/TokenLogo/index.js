@@ -40,7 +40,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
   if (address?.toLowerCase() === '0x255707B70BF90aa112006E1b07B9AeA6De021424'.toLowerCase()) {
     path = token // todo change on cone adr
   } else {
-    const list = DEFAULT_TOKEN_LIST.tokens.filter((x) => x.address.toLowerCase() === address.toLowerCase())
+    const list = DEFAULT_TOKEN_LIST.tokens.filter((x) => x?.address?.toLowerCase() === address.toLowerCase())
     path =
       list.length > 0
         ? list[0].logoURI
