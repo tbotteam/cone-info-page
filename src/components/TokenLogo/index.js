@@ -37,8 +37,8 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     )
   }
   let path
-  if (address?.toLowerCase() === '0x255707B70BF90aa112006E1b07B9AeA6De021424'.toLowerCase()) {
-    path = token // todo change on cone adr
+  if (address?.toLowerCase() === '0xA60205802E1B5C6EC1CAFA3cAcd49dFeECe05AC9'.toLowerCase()) {
+    path = token
   } else {
     const list = DEFAULT_TOKEN_LIST.tokens.filter((x) => x?.address?.toLowerCase() === address.toLowerCase())
     path =
