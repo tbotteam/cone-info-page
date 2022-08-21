@@ -270,7 +270,7 @@ export function useListedTokens() {
   useEffect(() => {
     async function fetchList() {
       const allFetched = DEFAULT_TOKEN_LIST
-      let formatted = allFetched?.tokens?.map((t) => t.address.toLowerCase())
+      let formatted = allFetched?.tokens?.map((t) => t.address?.toLowerCase())
       updateSupportedTokens(formatted)
     }
     if (!supportedTokens) {

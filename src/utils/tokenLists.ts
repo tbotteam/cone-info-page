@@ -7,7 +7,7 @@ import Ajv from 'ajv'
  * @param uri to convert to fetch-able http url
  */
 function uriToHttp(uri: string): string[] {
-  const protocol = uri.split(':')[0].toLowerCase()
+  const protocol = uri.split(':')[0]?.toLowerCase()
   switch (protocol) {
     case 'https':
       return [uri]

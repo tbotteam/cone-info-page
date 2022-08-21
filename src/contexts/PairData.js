@@ -300,7 +300,7 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
     data.oneWeekVolumeUSD = parseFloat(data.volumeUSD)
   }
 
-  if (TRACKED_OVERRIDES.includes(pairAddress.toLowerCase())) {
+  if (TRACKED_OVERRIDES.includes(pairAddress?.toLowerCase())) {
     data.oneDayVolumeUSD = oneDayVolumeUntracked
     data.oneWeekVolumeUSD = oneWeekVolumeUntracked
     data.volumeChangeUSD = volumeChangeUntracked
