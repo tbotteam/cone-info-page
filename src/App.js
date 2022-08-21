@@ -126,12 +126,12 @@ function App() {
                 path="/token/:tokenAddress"
                 render={({ match }) => {
                   if (
-                    isAddress(match.params.tokenAddress.toLowerCase()) &&
-                    !Object.keys(TOKEN_BLACKLIST).includes(match.params.tokenAddress.toLowerCase())
+                    isAddress(match.params.tokenAddress?.toLowerCase()) &&
+                    !Object.keys(TOKEN_BLACKLIST).includes(match.params.tokenAddress?.toLowerCase())
                   ) {
                     return (
                       <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
-                        <TokenPage address={match.params.tokenAddress.toLowerCase()} />
+                        <TokenPage address={match.params.tokenAddress?.toLowerCase()} />
                       </LayoutWrapper>
                     )
                   } else {
@@ -145,12 +145,12 @@ function App() {
                 path="/pair/:pairAddress"
                 render={({ match }) => {
                   if (
-                    isAddress(match.params.pairAddress.toLowerCase()) &&
-                    !Object.keys(PAIR_BLACKLIST).includes(match.params.pairAddress.toLowerCase())
+                    isAddress(match.params.pairAddress?.toLowerCase()) &&
+                    !Object.keys(PAIR_BLACKLIST).includes(match.params.pairAddress?.toLowerCase())
                   ) {
                     return (
                       <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
-                        <PairPage pairAddress={match.params.pairAddress.toLowerCase()} />
+                        <PairPage pairAddress={match.params.pairAddress?.toLowerCase()} />
                       </LayoutWrapper>
                     )
                   } else {
@@ -163,10 +163,10 @@ function App() {
                 strict
                 path="/account/:accountAddress"
                 render={({ match }) => {
-                  if (isAddress(match.params.accountAddress.toLowerCase())) {
+                  if (isAddress(match.params.accountAddress?.toLowerCase())) {
                     return (
                       <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
-                        <AccountPage account={match.params.accountAddress.toLowerCase()} />
+                        <AccountPage account={match.params.accountAddress?.toLowerCase()} />
                       </LayoutWrapper>
                     )
                   } else {
