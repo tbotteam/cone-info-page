@@ -25,7 +25,7 @@ interface Position {
   cumulativeFeeUSD: number
 }
 
-const PRICE_DISCOVERY_START_TIMESTAMP = 1634803725
+const PRICE_DISCOVERY_START_TIMESTAMP = 1683278679
 
 function formatPricesForEarlyTimestamps(position): Position {
   if (position.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {

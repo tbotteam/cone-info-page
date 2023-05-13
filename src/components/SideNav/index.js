@@ -164,8 +164,8 @@ function SideNav({ history }) {
           </AutoColumn>
           <AutoColumn gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
             <HeaderText>
-              <Link href="https://cone.exchange" target="_blank">
-                cone.exchange
+              <Link href="https://usdfi.com" target="_blank">
+                usdfi.com
               </Link>
             </HeaderText>
             <HeaderText>
