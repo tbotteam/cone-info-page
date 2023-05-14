@@ -169,18 +169,33 @@ function SideNav({ history }) {
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://docs.cone.exchange" target="_blank">
+              <Link href="https://docs.usdfi.com/usdfi-working-paper/abstract" target="_blank">
                 Docs
               </Link>
             </HeaderText>
             <HeaderText>
+              <Link href="https://docs.usdfi.com/security/audits" target="_blank">
+                Audits
+              </Link>
+            </HeaderText>
+            <HeaderText>
+              <Link href="https://t.me/USDFI_DE" target="_blank">
+                Telegram EN
+              </Link>
+            </HeaderText>
+            <HeaderText>
+              <Link href="https://t.me/USDFI_DE" target="_blank">
+                Telegram DE
+              </Link>
+            </HeaderText>
+            <HeaderText>
               {/*todo*/}
-              <Link href="https://discord.gg/Tv2B4REhVP" target="_blank">
+              <Link href="https://discord.com/invite/MjvpF8UwB4" target="_blank">
                 Discord
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://twitter.com/coneswap" target="_blank">
+              <Link href="https://twitter.com/stable_usdfi" target="_blank">
                 Twitter
               </Link>
             </HeaderText>
