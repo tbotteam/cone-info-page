@@ -179,7 +179,7 @@ function SideNav({ history }) {
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://t.me/USDFI_DE" target="_blank">
+              <Link href="https://t.me/USDFI" target="_blank">
                 Telegram EN
               </Link>
             </HeaderText>
