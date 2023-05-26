@@ -290,7 +290,7 @@
       "address": "0xfCe146bF3146100cfe5dB4129cf6C82b0eF4Ad8c",
       "chainId": 56,
       "decimals": 8,
-      "logoURI": "https://tokens.pancakeswap.finance/images/0xfCe146bF3146100cfe5dB4129cf6C82b0eF4Ad8c.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5777.png"
     },
     {
       "name": "The Sandbox",
@@ -597,12 +597,12 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5956.png"
     },
     {
-      "name": "FitBurn",
-      "symbol": "CAL",
-      "address": "0x859C940F080B197659b3EfFc804fD622Df66f0a1",
+      "name": "Qi Dao",
+      "symbol": "QI",
+      "address": "0xdDC3D26BAA9D2d979F5E2e42515478bf18F354D5",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/23480.png"
+      "logoURI": "https://assets.coingecko.com/coins/images/15329/small/qi.png?1620540969"
     }
   ]
 }
