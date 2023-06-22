@@ -335,7 +335,7 @@
     {
       "name": "True USD",
       "symbol": "TUSD",
-      "address": "0x14016E85a25aeb13065688cAFB43044C2ef86784",
+      "address": "0x40af3827F39D0EAcBF4A168f8D4ee67c121D11c9",
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://tokens.pancakeswap.finance/images/0x14016E85a25aeb13065688cAFB43044C2ef86784.png"
@@ -530,7 +530,7 @@
       "address": "0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets.coingecko.com/coins/images/27266/small/Bob-logo.png?1663073030"
+      "logoURI": "https://raw.githubusercontent.com/zkBob/docs/main/.gitbook/assets/BOB_color.png"
     },
     {
       "name": "Binance ETH staking",
@@ -603,6 +603,38 @@
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://assets.coingecko.com/coins/images/15329/small/qi.png?1620540969"
+    },
+    {
+      "name": "Frax Share",
+      "symbol": "FXS",
+      "address": "0xe48A3d7d0Bc88d552f730B62c006bC925eadB9eE",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/13423/small/Frax_Shares_icon.png?1679886947"
+    },
+    {
+      "name": "MIOTA",
+      "symbol": "IOTA",
+      "address": "0xd944f1D1e9d5f9Bb90b62f9D45e447D989580782",
+      "chainId": 56,
+      "decimals": 6,
+      "logoURI": "https://assets.coingecko.com/coins/images/692/small/IOTA_Swirl.png?1604238557"
+    },
+    {
+      "name": "AGEUR",
+      "symbol": "agEUR",
+      "address": "0x12f31B73D812C6Bb0d735a218c086d44D5fe5f89",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/19479/small/agEUR.png?1635283566"
+    },
+    {
+      "name": "Magic Internet Money",
+      "symbol": "MIM",
+      "address": "0xfE19F0B51438fd612f6FD59C1dbB3eA319f433Ba",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/16786/small/mimlogopng.png?1624979612"
     }
   ]
 }
