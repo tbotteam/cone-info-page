@@ -426,7 +426,7 @@ export const GLOBAL_DATA = (block) => {
 
 export const GLOBAL_TXNS = gql`
   query transactions {
-    transactions(first: 100, orderBy: timestamp, orderDirection: desc) {
+    transactions(first: 1000, orderBy: timestamp, orderDirection: desc) {
       mints(orderBy: timestamp, orderDirection: desc) {
         transaction {
           id
@@ -809,7 +809,7 @@ export const TOKEN_DATA = (tokenAddress, block) => {
 
 export const FILTERED_TRANSACTIONS = gql`
   query ($allPairs: [Bytes]!) {
-    mints(first: 20, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
+    mints(first: 1000, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
       transaction {
         id
         timestamp
@@ -830,7 +830,7 @@ export const FILTERED_TRANSACTIONS = gql`
       amount1
       amountUSD
     }
-    burns(first: 20, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
+    burns(first: 1000, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
       transaction {
         id
         timestamp
@@ -851,7 +851,7 @@ export const FILTERED_TRANSACTIONS = gql`
       amount1
       amountUSD
     }
-    swaps(first: 30, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
+    swaps(first: 300, where: { pair_in: $allPairs }, orderBy: timestamp, orderDirection: desc) {
       transaction {
         id
         timestamp
