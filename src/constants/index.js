@@ -24,10 +24,11 @@ export const PRICE_OVERRIDES = [
 ]
 
 // hide from overview list
-export const TOKEN_BLACKLIST = ['']
+export const TOKEN_BLACKLIST = ['0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase(),'0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase()]
+// export const TOKEN_BLACKLIST = ['0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase(),'0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase()]
 
 // pair blacklist
-export const PAIR_BLACKLIST = []
+export const PAIR_BLACKLIST = ['0xedbe30433528643d1ea4733e89d3ffa99bc304b2'.toLowerCase(),'0x42b24ad085c3dc213b4bd67f5449dc279c637400'.toLowerCase()]
 
 // warnings to display if page contains info about blocked token
 export const BLOCKED_WARNINGS = {}
@@ -42,7 +43,7 @@ export const UNTRACKED_COPY = 'Derived USD values may be inaccurate without liqu
 // tokens that should be tracked but arent due to lag in subgraph
 export const TRACKED_OVERRIDES = [
   '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'.toLowerCase(), // WBNB
-  '0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase(),  // USDFI
+  // '0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase(),  // USDFI
   '0x2170ed0880ac9a755fd29b2688956bd959f933f8'.toLowerCase(), // WETH
   '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'.toLowerCase(), // USDC
   '0x90c97f71e18723b0cf0dfa30ee176ab653e89f40'.toLowerCase(), // FRAX
@@ -58,5 +59,6 @@ export const TRACKED_OVERRIDES = [
   '0x3Cd55356433C89E50DC51aB07EE0fa0A95623D53'.toLowerCase(), // SFRXETH
   '0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5'.toLowerCase(), // HAY
   '0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275'.toLowerCase(), // BNBX
+  // '0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase(), //STABLE
 
 ]
