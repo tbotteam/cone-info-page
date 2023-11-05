@@ -20,8 +20,9 @@ import {
   TOP_LPS_PER_PAIRS,
 } from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import { useAllPairData } from './PairData'
+import { getBulkPairData, useAllPairData } from './PairData'
 import { useTokenChartDataCombined } from './TokenData'
+import { PLATFORM_TOKENS_TO_PAIR_MAPPING, PRICE_OVERRIDES } from '../constants'
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
 const UPDATE_CHART = 'UPDATE_CHART'
@@ -30,6 +31,7 @@ const ETH_PRICE_KEY = 'ETH_PRICE_KEY'
 const UPDATE_ALL_PAIRS_IN_UNISWAP = 'UPDAUPDATE_ALL_PAIRS_IN_UNISWAPTE_TOP_PAIRS'
 const UPDATE_ALL_TOKENS_IN_UNISWAP = 'UPDATE_ALL_TOKENS_IN_UNISWAP'
 const UPDATE_TOP_LPS = 'UPDATE_TOP_LPS'
+const UPDATE_PLATFORM_TOKENS_USD_PRICES = 'UPDATE_PLATFORM_TOKENS_USD_PRICES'
 
 const offsetVolumes = []
 
@@ -75,6 +77,18 @@ function reducer(state, { type, payload }) {
         [ETH_PRICE_KEY]: ethPrice,
         oneDayPrice,
         ethPriceChange,
+      }
+    }
+
+    case UPDATE_PLATFORM_TOKENS_USD_PRICES: {
+      const { platformTokensUSDPrices } = payload
+
+      return {
+        ...state,
+        platformTokensUSDPrices: {
+          ...state.platformTokensUSDPrices,
+          ...platformTokensUSDPrices,
+        },
       }
     }
 
@@ -148,6 +162,15 @@ export default function Provider({ children }) {
     })
   }, [])
 
+  const updatePlatformTokensUSDPrices = useCallback((platformTokensUSDPrices) => {
+    dispatch({
+      type: UPDATE_PLATFORM_TOKENS_USD_PRICES,
+      payload: {
+        platformTokensUSDPrices,
+      },
+    })
+  }, [])
+
   const updateAllPairsInUniswap = useCallback((allPairs) => {
     dispatch({
       type: UPDATE_ALL_PAIRS_IN_UNISWAP,
@@ -184,6 +207,7 @@ export default function Provider({ children }) {
             updateTransactions,
             updateChart,
             updateEthPrice,
+            updatePlatformTokensUSDPrices,
             updateTopLps,
             updateAllPairsInUniswap,
             updateAllTokensInUniswap,
@@ -196,6 +220,7 @@ export default function Provider({ children }) {
           updateTopLps,
           updateChart,
           updateEthPrice,
+          updatePlatformTokensUSDPrices,
           updateAllPairsInUniswap,
           updateAllTokensInUniswap,
         ]
@@ -496,6 +521,32 @@ const getEthPrice = async () => {
   return [ethPrice, ethPriceOneDay, priceChangeETH]
 }
 
+/* Gets the current price of platform tokens, 24 hour price, and % change between them
+ */
+export const getPlatformTokensUSDPrices = async (ethPrice) => {
+  let platformTokensPrices = {}
+
+  try {
+    const pairs = Object.values(PLATFORM_TOKENS_TO_PAIR_MAPPING)
+    const res = await getBulkPairData(pairs, ethPrice)
+
+    for (let result of res) {
+      platformTokensPrices[result.token0.id] = result.token1Price * ethPrice
+    }
+
+    // adding stablecoins like usdt and busd.
+    for (let token of PRICE_OVERRIDES) {
+      platformTokensPrices[token] = 1
+    }
+  } catch (e) {
+    console.log(e)
+  }
+
+  console.log('platformTokensPrices', platformTokensPrices)
+
+  return platformTokensPrices
+}
+
 const PAIRS_TO_FETCH = 500
 const TOKENS_TO_FETCH = 500
 
@@ -562,7 +613,7 @@ export function useGlobalData() {
   const [state, { update, updateAllPairsInUniswap, updateAllTokensInUniswap }] = useGlobalDataContext()
   const [ethPrice, oldEthPrice] = useEthPrice()
 
-  console.log('global state', state)
+  // console.log('global state', state)
 
   const data = state?.globalData
 
@@ -572,7 +623,7 @@ export function useGlobalData() {
     async function fetchData() {
       let globalData = await getGlobalData(ethPrice, oldEthPrice)
 
-      console.log('global data', globalData)
+      // console.log('global data', globalData)
 
       globalData && update(globalData)
 
@@ -663,6 +714,24 @@ export function useEthPrice() {
   }, [ethPrice, updateEthPrice])
 
   return [ethPrice, ethPriceOld]
+}
+
+export function usePlatformTokensUSDPrices() {
+  const [state, { updatePlatformTokensUSDPrices }] = useGlobalDataContext()
+  const [ethPrice] = useEthPrice()
+  const platformTokensUSDPrices = state?.platformTokensUSDPrices
+
+  useEffect(() => {
+    async function checkForPlatformTokensPrices() {
+      if (!platformTokensUSDPrices && ethPrice) {
+        let _platformTokensUSDPrices = await getPlatformTokensUSDPrices(ethPrice)
+        updatePlatformTokensUSDPrices(_platformTokensUSDPrices)
+      }
+    }
+    checkForPlatformTokensPrices()
+  }, [platformTokensUSDPrices, updatePlatformTokensUSDPrices, ethPrice])
+
+  return platformTokensUSDPrices
 }
 
 export function useAllPairsInUniswap() {

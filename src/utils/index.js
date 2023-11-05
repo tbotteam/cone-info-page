@@ -8,12 +8,7 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import {
-  timeframeOptions,
-  WBNB,
-  NETWORK_TOKEN_NAME,
-  NETWORK_SCAN
-} from '../constants'
+import { timeframeOptions, WBNB, NETWORK_TOKEN_NAME, NETWORK_SCAN } from '../constants'
 import Numeral from 'numeral'
 
 // format libraries
@@ -481,4 +476,8 @@ export function isEquivalent(a, b) {
     }
   }
   return true
+}
+
+export function isEmptyObject(objectName) {
+  return Object.keys(objectName ?? {}).length === 0
 }

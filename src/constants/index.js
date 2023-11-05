@@ -17,18 +17,20 @@ export const NETWORK_TOKEN_NAME = 'BNB'
 
 // always 1 USD
 export const PRICE_OVERRIDES = [
-  '0x55d398326f99059fF775485246999027B3197955', // USDT
-  '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56', // BUSDT
-  '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',// USDC
-  '0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318',  // USDFI
+  '0x55d398326f99059ff775485246999027b3197955', // USDT
+  '0xe9e7cea3dedca5984780bafc599bd69add087d56', // BUSDT
+  '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d', // USDC
 ]
 
-// hide from overview list
-export const TOKEN_BLACKLIST = ['0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase(),'0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase()]
-// export const TOKEN_BLACKLIST = ['0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase(),'0x11A38e06699b238D6D9A0C7A01f3AC63a07ad318'.toLowerCase()]
+// token addresses and their respective pair addresses (pools with bnb/wbnb) to use for price calculation.
+export const PLATFORM_TOKENS_TO_PAIR_MAPPING = {
+  0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318: '0x4c88871d129a618ebb460f90f99311cb32d840ea',
+  0xa3870fbbeb730ba99e4107051612af3465ca9f5e: '0xa309cc1cbcf7f73fd1f3dbdaa9cb946b8d449884',
+}
 
-// pair blacklist
-export const PAIR_BLACKLIST = ['0xedbe30433528643d1ea4733e89d3ffa99bc304b2'.toLowerCase(),'0x42b24ad085c3dc213b4bd67f5449dc279c637400'.toLowerCase()]
+export const TOKEN_BLACKLIST = []
+
+export const PAIR_BLACKLIST = []
 
 // warnings to display if page contains info about blocked token
 export const BLOCKED_WARNINGS = {}
@@ -60,5 +62,4 @@ export const TRACKED_OVERRIDES = [
   '0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5'.toLowerCase(), // HAY
   '0x1bdd3Cf7F79cfB8EdbB955f20ad99211551BA275'.toLowerCase(), // BNBX
   // '0xa3870fbBeb730BA99e4107051612af3465CA9F5e'.toLowerCase(), //STABLE
-
 ]

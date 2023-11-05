@@ -31,15 +31,11 @@ import { PlusCircle, Bookmark, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import {
-  UNTRACKED_COPY,
-  TOKEN_BLACKLIST,
-  BLOCKED_WARNINGS,
-  NETWORK_SCAN
-} from '../constants'
+import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS, NETWORK_SCAN } from '../constants'
 import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
+import { usePlatformTokensUSDPrices } from '../contexts/GlobalData'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -122,6 +118,8 @@ function TokenPage({ address, history }) {
     txnChange,
   } = useTokenData(address)
 
+  const platformTokensUSDPrices = usePlatformTokensUSDPrices()
+
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
   }, [])
@@ -138,7 +136,12 @@ function TokenPage({ address, history }) {
   const transactions = useTokenTransactions(address)
 
   // price
-  const price = priceUSD ? formattedNum(priceUSD, true) : ''
+  const price = platformTokensUSDPrices?.[address]
+    ? formattedNum(platformTokensUSDPrices?.[address], true)
+    : priceUSD
+    ? formattedNum(priceUSD, true)
+    : ''
+  // const price = priceUSD ? formattedNum(priceUSD, true) : ''
   const priceChange = priceChangeUSD ? formattedPercent(priceChangeUSD) : ''
 
   // volume

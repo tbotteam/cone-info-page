@@ -226,7 +226,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
       return ''
     }
   }
-  console.log('PAIRS', pairs)
+  // console.log('PAIRS', pairs)
   const pairList =
     pairs &&
     Object.keys(pairs)
