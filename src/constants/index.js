@@ -24,8 +24,8 @@ export const PRICE_OVERRIDES = [
 
 // token addresses and their respective pair addresses (pools with bnb/wbnb) to use for price calculation.
 export const PLATFORM_TOKENS_TO_PAIR_MAPPING = {
-  0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318: '0x4c88871d129a618ebb460f90f99311cb32d840ea',
-  0xa3870fbbeb730ba99e4107051612af3465ca9f5e: '0xa309cc1cbcf7f73fd1f3dbdaa9cb946b8d449884',
+  '0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318': '0x4c88871d129a618ebb460f90f99311cb32d840ea',
+  '0xa3870fbbeb730ba99e4107051612af3465ca9f5e': '0xa309cc1cbcf7f73fd1f3dbdaa9cb946b8d449884',
 }
 
 export const TOKEN_BLACKLIST = []

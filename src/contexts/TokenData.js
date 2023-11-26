@@ -23,9 +23,10 @@ import {
   isAddress,
   splitQuery,
 } from '../utils'
-import { timeframeOptions } from '../constants'
+import { PLATFORM_TOKENS_TO_PAIR_MAPPING, timeframeOptions } from '../constants'
 import { useLatestBlocks } from './Application'
 import { updateNameData } from '../utils/data'
+import { getBulkPairData } from './PairData'
 
 const UPDATE = 'UPDATE'
 const UPDATE_TOKEN_TXNS = 'UPDATE_TOKEN_TXNS'
@@ -219,6 +220,20 @@ export default function Provider({ children }) {
   )
 }
 
+const getTokenPriceFromReserve = async (tokenAddress, ethPrice) => {
+  let tokenPrice = 0
+  try {
+    const pairAddress = PLATFORM_TOKENS_TO_PAIR_MAPPING[tokenAddress]
+    const res = await getBulkPairData([pairAddress], ethPrice)
+    tokenPrice = res[0].token1Price * ethPrice
+    console.log('token price', tokenPrice)
+  } catch (e) {
+    console.log('error fetching token price', e)
+  }
+
+  return tokenPrice
+}
+
 const getTopTokens = async (ethPrice, ethPriceOld) => {
   const utcCurrentTime = dayjs()
   const utcOneDayBack = utcCurrentTime.subtract(1, 'day').unix()
@@ -312,9 +327,16 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             oneDayHistory?.derivedETH ? oneDayHistory?.derivedETH * ethPriceOld : 0
           )
 
-          console.log('token data', data)
+          let usdPrice = data?.derivedETH * ethPrice
+
+          // check if token is a platform token.
+          if (PLATFORM_TOKENS_TO_PAIR_MAPPING[token.id]) {
+            const tokenPrice = await getTokenPriceFromReserve(token.id, ethPrice)
+            usdPrice = tokenPrice
+          }
+
           // set data
-          data.priceUSD = data?.derivedETH * ethPrice
+          data.priceUSD = usdPrice
           data.totalLiquidityUSD = currentLiquidityUSD
           data.oneDayVolumeUSD = parseFloat(oneDayVolumeUSD)
           data.volumeChangeUSD = volumeChangeUSD
