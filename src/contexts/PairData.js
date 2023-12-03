@@ -286,6 +286,8 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
   data.oneDayVolumeUntracked = oneDayVolumeUntracked
   data.oneWeekVolumeUntracked = oneWeekVolumeUntracked
   data.volumeChangeUntracked = volumeChangeUntracked
+  data.token1OldPrice = oneDayData?.token1Price
+  data.token0OldPrice = oneDayData?.token0Price
 
   // set liquidity properties
   data.trackedReserveUSD = data.trackedReserveETH * ethPrice

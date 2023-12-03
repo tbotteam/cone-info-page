@@ -6,6 +6,7 @@ import {
   PRICES_BY_BLOCK,
   TOKEN_CHART,
   TOKEN_DATA,
+  TOKEN_PAIRS_WITH_PRICE_CALCULATOR_TOKENS,
   TOKEN_TOP_DAY_DATAS,
   TOKENS_HISTORICAL_BULK,
 } from '../apollo/queries'
@@ -23,7 +24,7 @@ import {
   isAddress,
   splitQuery,
 } from '../utils'
-import { PLATFORM_TOKENS_TO_PAIR_MAPPING, timeframeOptions } from '../constants'
+import { PLATFORM_TOKENS_TO_PAIR_MAPPING, PRICE_CALCULATOR_TOKENS, timeframeOptions, WBNB } from '../constants'
 import { useLatestBlocks } from './Application'
 import { updateNameData } from '../utils/data'
 import { getBulkPairData } from './PairData'
@@ -220,18 +221,53 @@ export default function Provider({ children }) {
   )
 }
 
-const getTokenPriceFromReserve = async (tokenAddress, ethPrice) => {
-  let tokenPrice = 0
+const getTokenPricesFromReserves = async (tokenAddress, ethPrice, ethPriceOld) => {
+  // FLOW
+  // get top pairs for token
+  // if pair exists with either, wbnb, busd, usdc, usdt, dai, use that pair for calculating price.
+
+  let result = {
+    tokenPrice: 0,
+    tokenOldPrice: 0,
+  }
+
+  // handling case for wbnb.
+  if (tokenAddress === WBNB) {
+    result.tokenPrice = ethPrice
+    result.tokenOldPrice = ethPriceOld
+    return result
+  }
+
   try {
-    const pairAddress = PLATFORM_TOKENS_TO_PAIR_MAPPING[tokenAddress]
-    const res = await getBulkPairData([pairAddress], ethPrice)
-    tokenPrice = res[0].token1Price * ethPrice
-    console.log('token price', tokenPrice)
+    // get top pairs for token
+    const pairs = await getTokenPairsWithPriceCalculatorTokens(tokenAddress)
+
+    if (pairs?.length > 0) {
+      const pair = pairs[0]
+      const pairAddress = pair.id
+      const priceData = await getBulkPairData([pairAddress], ethPrice)
+
+      // handling cases for pair with wbnb.
+      if (pair.token0.id === WBNB || pair.token1.id === WBNB) {
+        const tokenIndex = pair.token0.id === tokenAddress ? '1' : '0'
+
+        const tokenPriceInWbnb = priceData[0][`token${tokenIndex}Price`]
+        const tokenOldPriceInWbnb = priceData[0][`token${tokenIndex}OldPrice`]
+
+        result.tokenPrice = tokenPriceInWbnb * ethPrice
+        result.tokenOldPrice = tokenOldPriceInWbnb * ethPriceOld
+      } else {
+        // If not WBNB, then pair must be with stable coin.
+        const tokenIndex = pair.token0.id === tokenAddress ? '0' : '1'
+        result.tokenPrice = priceData[0][`token${tokenIndex}Price`]
+        result.tokenOldPrice = priceData[0][`token${tokenIndex}OldPrice`]
+      }
+    }
   } catch (e) {
     console.log('error fetching token price', e)
   }
 
-  return tokenPrice
+  return result
 }
 
 const getTopTokens = async (ethPrice, ethPriceOld) => {
@@ -318,22 +354,19 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             twoDayHistory?.txCount ?? 0
           )
 
-          const currentLiquidityUSD = data?.totalLiquidity * ethPrice * data?.derivedETH
-          const oldLiquidityUSD = oneDayHistory?.totalLiquidity * ethPriceOld * oneDayHistory?.derivedETH
-
-          // percent changes
-          const priceChangeUSD = getPercentChange(
-            data?.derivedETH * ethPrice,
-            oneDayHistory?.derivedETH ? oneDayHistory?.derivedETH * ethPriceOld : 0
-          )
-
-          let usdPrice = data?.derivedETH * ethPrice
+          let defaultUsdPrice = data?.derivedETH * ethPrice
+          let defaultUsdPriceOld = oneDayHistory?.derivedETH ? oneDayHistory?.derivedETH * ethPriceOld : 0
 
           // check if token is a platform token.
-          if (PLATFORM_TOKENS_TO_PAIR_MAPPING[token.id]) {
-            const tokenPrice = await getTokenPriceFromReserve(token.id, ethPrice)
-            usdPrice = tokenPrice
-          }
+          const { tokenPrice, tokenOldPrice } = await getTokenPricesFromReserves(token.id, ethPrice, ethPriceOld)
+          const usdPrice = tokenPrice || defaultUsdPrice
+          const usdPriceOld = tokenOldPrice || defaultUsdPriceOld
+
+          // percent changes
+          const priceChangeUSD = getPercentChange(usdPrice, usdPriceOld)
+
+          const currentLiquidityUSD = data?.totalLiquidity * usdPrice
+          const oldLiquidityUSD = oneDayHistory?.totalLiquidity * usdPriceOld
 
           // set data
           data.priceUSD = usdPrice
@@ -513,6 +546,19 @@ const getTokenPairs = async (tokenAddress) => {
       fetchPolicy: 'cache-first',
     })
     return result.data?.['pairs0'].concat(result.data?.['pairs1'])
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const getTokenPairsWithPriceCalculatorTokens = async (tokenAddress) => {
+  try {
+    let result = await client.query({
+      query: TOKEN_PAIRS_WITH_PRICE_CALCULATOR_TOKENS(tokenAddress),
+      fetchPolicy: 'cache-first',
+    })
+
+    return result.data?.pairs
   } catch (e) {
     console.log(e)
   }

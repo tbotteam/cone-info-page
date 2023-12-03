@@ -12,7 +12,7 @@ export const timeframeOptions = {
 
 export const NETWORK_SCAN = 'bscscan.com'
 
-export const WBNB = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+export const WBNB = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
 export const NETWORK_TOKEN_NAME = 'BNB'
 
 // always 1 USD
@@ -27,6 +27,20 @@ export const PLATFORM_TOKENS_TO_PAIR_MAPPING = {
   '0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318': '0x4c88871d129a618ebb460f90f99311cb32d840ea',
   '0xa3870fbbeb730ba99e4107051612af3465ca9f5e': '0xa309cc1cbcf7f73fd1f3dbdaa9cb946b8d449884',
 }
+
+export const PRICE_CALCULATOR_TOKENS = [
+  // wbnb
+  '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+
+  // usdt
+  '0x55d398326f99059ff775485246999027b3197955',
+
+  // usdc
+  '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+
+  // busd
+  '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+]
 
 export const TOKEN_BLACKLIST = []
 
