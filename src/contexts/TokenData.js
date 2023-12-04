@@ -7,6 +7,7 @@ import {
   TOKEN_CHART,
   TOKEN_DATA,
   TOKEN_PAIRS_WITH_PRICE_CALCULATOR_TOKENS,
+  TOKEN_PRICES_BY_PAIRS_BY_BLOCK,
   TOKEN_TOP_DAY_DATAS,
   TOKENS_HISTORICAL_BULK,
 } from '../apollo/queries'
@@ -24,7 +25,7 @@ import {
   isAddress,
   splitQuery,
 } from '../utils'
-import { PLATFORM_TOKENS_TO_PAIR_MAPPING, PRICE_CALCULATOR_TOKENS, timeframeOptions, WBNB } from '../constants'
+import { timeframeOptions, WBNB } from '../constants'
 import { useLatestBlocks } from './Application'
 import { updateNameData } from '../utils/data'
 import { getBulkPairData } from './PairData'
@@ -221,6 +222,44 @@ export default function Provider({ children }) {
   )
 }
 
+const getPairAddressDataForPriceCalculation = async (tokenAddress) => {
+  let result = {
+    pairAddress: null,
+    tokenIndex: null,
+    isEthPair: false,
+  }
+
+  if (tokenAddress === WBNB || !tokenAddress) return result
+
+  try {
+    // getting pairs for price calculation
+    let pairs = await getTokenPairsWithPriceCalculatorTokens(tokenAddress)
+
+    // if no pairs found, return default default empty result.
+    if (!pairs || pairs.length === 0) return result
+
+    // if pair found, get the first pair.
+    const pair = pairs[0]
+    result.pairAddress = pair.id
+
+    // check if pair is with wbnb.
+    if (pair.token0.id === WBNB || pair.token1.id === WBNB) {
+      // if pair is with wbnb, then token price will be used of the counter token.
+      // e.g if pair is with wbnb, and token is token0, then token price will be token1 price.
+      result.tokenIndex = pair.token0.id === tokenAddress ? '1' : '0'
+      result.isEthPair = true
+    } else {
+      // If not WBNB, then pair must be with stable coin.
+      result.tokenIndex = pair.token0.id === tokenAddress ? '0' : '1'
+      result.isEthPair = false
+    }
+    return result
+  } catch (error) {
+    console.log('error getting price calculation pairs for token.', error)
+    return result
+  }
+}
+
 const getTokenPricesFromReserves = async (tokenAddress, ethPrice, ethPriceOld) => {
   // FLOW
   // get top pairs for token
@@ -239,18 +278,14 @@ const getTokenPricesFromReserves = async (tokenAddress, ethPrice, ethPriceOld) =
   }
 
   try {
-    // get top pairs for token
-    const pairs = await getTokenPairsWithPriceCalculatorTokens(tokenAddress)
+    // get top pair for token
+    const { pairAddress, tokenIndex, isEthPair } = await getPairAddressDataForPriceCalculation(tokenAddress)
 
-    if (pairs?.length > 0) {
-      const pair = pairs[0]
-      const pairAddress = pair.id
+    if (pairAddress) {
       const priceData = await getBulkPairData([pairAddress], ethPrice)
 
       // handling cases for pair with wbnb.
-      if (pair.token0.id === WBNB || pair.token1.id === WBNB) {
-        const tokenIndex = pair.token0.id === tokenAddress ? '1' : '0'
-
+      if (isEthPair) {
         const tokenPriceInWbnb = priceData[0][`token${tokenIndex}Price`]
         const tokenOldPriceInWbnb = priceData[0][`token${tokenIndex}OldPrice`]
 
@@ -258,7 +293,6 @@ const getTokenPricesFromReserves = async (tokenAddress, ethPrice, ethPriceOld) =
         result.tokenOldPrice = tokenOldPriceInWbnb * ethPriceOld
       } else {
         // If not WBNB, then pair must be with stable coin.
-        const tokenIndex = pair.token0.id === tokenAddress ? '0' : '1'
         result.tokenPrice = priceData[0][`token${tokenIndex}Price`]
         result.tokenOldPrice = priceData[0][`token${tokenIndex}OldPrice`]
       }
@@ -597,18 +631,36 @@ const getIntervalTokenData = async (tokenAddress, startTime, interval = 3600, la
       })
     }
 
-    let result = await splitQuery(PRICES_BY_BLOCK, client, [tokenAddress], blocks, 50)
+    // TODO: get pair address and then get the token price histories for the pair and then use that to calculate the token price history.
+    let { pairAddress, tokenIndex, isEthPair } = await getPairAddressDataForPriceCalculation(tokenAddress)
+
+    let result = []
+
+    // if pair exists with supported price token, use pair price else use default derived eth price.
+    if (pairAddress) {
+      result = await splitQuery(TOKEN_PRICES_BY_PAIRS_BY_BLOCK, client, [pairAddress], blocks, 50)
+    } else {
+      result = await splitQuery(PRICES_BY_BLOCK, client, [tokenAddress], blocks, 50)
+    }
+
     console.log('PRICES_BY_BLOCK', result)
 
     // format token ETH price results
     let values = []
     for (var row in result) {
       let timestamp = row.split('t')[1]
-      let derivedETH = parseFloat(result[row]?.derivedETH ?? '0')
+      let tokenPrice = '0'
+
+      if (pairAddress) {
+        tokenPrice = parseFloat(result[row]?.[`token${tokenIndex}Price`] ?? '0')
+      } else {
+        tokenPrice = parseFloat(result[row]?.derivedETH ?? '0')
+      }
+
       if (timestamp) {
         values.push({
           timestamp,
-          derivedETH,
+          tokenPrice,
         })
       }
     }
@@ -618,7 +670,13 @@ const getIntervalTokenData = async (tokenAddress, startTime, interval = 3600, la
     for (var brow in result) {
       let timestamp = brow.split('b')[1]
       if (timestamp) {
-        values[index].priceUSD = (result[brow]?.ethPrice ?? 0) * values[index].derivedETH
+        if (pairAddress) {
+          values[index].priceUSD = isEthPair
+            ? (result[brow]?.ethPrice ?? 0) * values[index].tokenPrice
+            : values[index].tokenPrice
+        } else {
+          values[index].priceUSD = (result[brow]?.ethPrice ?? 0) * values[index].tokenPrice
+        }
         index += 1
       }
     }

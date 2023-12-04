@@ -86,6 +86,35 @@ export const PRICES_BY_BLOCK = (tokenAddress, blocks) => {
   return gql(queryString)
 }
 
+export const TOKEN_PRICES_BY_PAIRS_BY_BLOCK = (pairAddress, blocks) => {
+  let queryString = 'query blocks {'
+  queryString += blocks.map(
+    (block) => `
+      t${block.timestamp}:pair(id:"${pairAddress}", block: { number: ${block.number} }) { 
+        token0{
+          id
+        }
+        token1{
+          id
+        }
+        token0Price
+        token1Price
+      }
+    `
+  )
+  queryString += ','
+  queryString += blocks.map(
+    (block) => `
+      b${block.timestamp}: bundle(id:"1", block: { number: ${block.number} }) { 
+        ethPrice
+      }
+    `
+  )
+
+  queryString += '}'
+  return gql(queryString)
+}
+
 export const TOP_LPS_PER_PAIRS = gql`
   query lps($pair: Bytes!) {
     liquidityPositions(where: { pair: $pair }, orderBy: liquidityTokenBalance, orderDirection: desc, first: 10) {
