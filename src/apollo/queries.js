@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { BUNDLE_ID } from '../constants'
+import { BUNDLE_ID, PRICE_CALCULATOR_TOKENS } from '../constants'
 
 export const SUBGRAPH_HEALTH = gql`
   query health {
@@ -70,6 +70,35 @@ export const PRICES_BY_BLOCK = (tokenAddress, blocks) => {
     (block) => `
       t${block.timestamp}:token(id:"${tokenAddress}", block: { number: ${block.number} }) { 
         derivedETH
+      }
+    `
+  )
+  queryString += ','
+  queryString += blocks.map(
+    (block) => `
+      b${block.timestamp}: bundle(id:"1", block: { number: ${block.number} }) { 
+        ethPrice
+      }
+    `
+  )
+
+  queryString += '}'
+  return gql(queryString)
+}
+
+export const TOKEN_PRICES_BY_PAIRS_BY_BLOCK = (pairAddress, blocks) => {
+  let queryString = 'query blocks {'
+  queryString += blocks.map(
+    (block) => `
+      t${block.timestamp}:pair(id:"${pairAddress}", block: { number: ${block.number} }) { 
+        token0{
+          id
+        }
+        token1{
+          id
+        }
+        token0Price
+        token1Price
       }
     `
   )
@@ -690,6 +719,8 @@ export const PAIRS_HISTORICAL_BULK = (block, pairs) => {
       trackedReserveETH
       volumeUSD
       untrackedVolumeUSD
+      token0Price
+      token1Price
     }
   }
   `
@@ -876,3 +907,38 @@ export const FILTERED_TRANSACTIONS = gql`
     }
   }
 `
+
+export const TOKEN_PAIRS_WITH_PRICE_CALCULATOR_TOKENS = (tokenAddress, block) => {
+  const tokenInString = PRICE_CALCULATOR_TOKENS.map((token) => `"${token}"`).join(', ')
+  const queryString = `
+    ${TokenFields}
+    query tokens {
+      pairs: pairs(
+        where: {
+          or: [
+            { token0: "${tokenAddress}", token1_in: [${tokenInString}] },
+            { token1: "${tokenAddress}", token0_in: [${tokenInString}] }
+          ]
+          ${block ? `, block: { number: ${block} }` : ''}
+        },
+        first: 50,
+        orderBy: reserveUSD,
+        orderDirection: desc
+      ) {
+        id
+        reserveUSD
+        token0Price
+        token1Price
+        token0 {
+          id
+          symbol
+        }
+        token1 {
+          id
+          symbol
+        }
+        }
+      }
+  `
+  return gql(queryString)
+}

@@ -11,12 +11,13 @@ import {
   PAIRS_HISTORICAL_BULK,
 } from '../apollo/queries'
 
-import { useEthPrice } from './GlobalData'
+import { useEthPrice, usePlatformTokensUSDPrices } from './GlobalData'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
 import {
+  formattedNum,
   get2DayPercentChange,
   getBlocksFromTimestamps,
   getPercentChange,
@@ -182,7 +183,7 @@ export default function Provider({ children }) {
   )
 }
 
-async function getBulkPairData(pairList, ethPrice) {
+export async function getBulkPairData(pairList, ethPrice) {
   const [t1, t2, tWeek] = getTimestampsForChanges()
   let [{ number: b1 }, { number: b2 }, { number: bWeek }] = await getBlocksFromTimestamps([t1, t2, tWeek])
 
@@ -256,7 +257,8 @@ async function getBulkPairData(pairList, ethPrice) {
 }
 
 function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock) {
-  console.log('PARSE DATA', data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock)
+  // console.log('PARSE DATA', data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock)
+
   const pairAddress = data.id
 
   // get volume changes
@@ -284,6 +286,8 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
   data.oneDayVolumeUntracked = oneDayVolumeUntracked
   data.oneWeekVolumeUntracked = oneWeekVolumeUntracked
   data.volumeChangeUntracked = volumeChangeUntracked
+  data.token1OldPrice = oneDayData?.token1Price
+  data.token0OldPrice = oneDayData?.token0Price
 
   // set liquidity properties
   data.trackedReserveUSD = data.trackedReserveETH * ethPrice

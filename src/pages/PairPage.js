@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { withRouter } from 'react-router-dom'
 import 'feather-icons'
 import styled from 'styled-components'
@@ -19,7 +19,7 @@ import TxnList from '../components/TxnList'
 import Loader from '../components/LocalLoader'
 import { BasicLink } from '../components/Link'
 import Search from '../components/Search'
-import { formattedNum, formattedPercent, getPoolLink, getSwapLink, shortenAddress } from '../utils'
+import { formattedNum, formattedPercent, getPoolLink, getSwapLink, isEmptyObject, shortenAddress } from '../utils'
 import { useColor } from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { TYPE, ThemedBackground } from '../Theme'
@@ -29,7 +29,7 @@ import { useMedia } from 'react-use'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import TokenLogo from '../components/TokenLogo'
 import { Hover } from '../components'
-import { useEthPrice } from '../contexts/GlobalData'
+import { useEthPrice, usePlatformTokensUSDPrices } from '../contexts/GlobalData'
 import Warning from '../components/Warning'
 import { usePathDismissed, useSavedPairs } from '../contexts/LocalStorage'
 
@@ -37,13 +37,7 @@ import { Bookmark, PlusCircle, AlertCircle } from 'react-feather'
 import FormattedName from '../components/FormattedName'
 import { useListedTokens } from '../contexts/Application'
 import HoverText from '../components/HoverText'
-import {
-  UNTRACKED_COPY,
-  PAIR_BLACKLIST,
-  BLOCKED_WARNINGS,
-  FEE,
-  NETWORK_SCAN
-} from '../constants'
+import { UNTRACKED_COPY, PAIR_BLACKLIST, BLOCKED_WARNINGS, FEE, NETWORK_SCAN } from '../constants'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -142,6 +136,8 @@ function PairPage({ pairAddress, history }) {
     liquidityChangeUSD,
   } = usePairData(pairAddress)
 
+  const platformTokensUSDPrices = usePlatformTokensUSDPrices()
+
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
   }, [])
@@ -170,15 +166,44 @@ function PairPage({ pairAddress, history }) {
 
   // token data for usd
   const [ethPrice] = useEthPrice()
-  const token0USD =
-    token0?.derivedETH && ethPrice ? formattedNum(parseFloat(token0.derivedETH) * parseFloat(ethPrice), true) : ''
-
-  const token1USD =
-    token1?.derivedETH && ethPrice ? formattedNum(parseFloat(token1.derivedETH) * parseFloat(ethPrice), true) : ''
 
   // rates
   const token0Rate = reserve0 && reserve1 ? formattedNum(reserve1 / reserve0) : '-'
   const token1Rate = reserve0 && reserve1 ? formattedNum(reserve0 / reserve1) : '-'
+
+  const { token0USD, token1USD } = useMemo(() => {
+    if (isEmptyObject(platformTokensUSDPrices)) {
+      return { token0USD: '', token1USD: '' }
+    }
+
+    // Initialize the values
+    let token0USDValue = ''
+    let token1USDValue = ''
+
+    // Calculate token0USD value
+    if (token0?.id && platformTokensUSDPrices[token0.id]) {
+      token0USDValue = formattedNum(parseFloat(platformTokensUSDPrices[token0.id]), true)
+    } else if (token1?.id && platformTokensUSDPrices[token1.id] && token0Rate) {
+      token0USDValue = formattedNum(parseFloat(platformTokensUSDPrices[token1.id] * token0Rate), true)
+    } else if (token0?.derivedETH && ethPrice) {
+      token0USDValue = formattedNum(parseFloat(token0.derivedETH) * parseFloat(ethPrice), true)
+    }
+
+    // Calculate token1USD value based on token0Rate or token1Rate if the token0USD value has not been set
+    if (token1?.id && platformTokensUSDPrices[token1.id]) {
+      token1USDValue = formattedNum(parseFloat(platformTokensUSDPrices[token1.id]), true)
+    } else if (token0?.id && platformTokensUSDPrices[token0.id] && token1Rate) {
+      token1USDValue = formattedNum(parseFloat(platformTokensUSDPrices[token0.id] * token1Rate), true)
+    } else if (token1?.derivedETH && ethPrice) {
+      token1USDValue = formattedNum(parseFloat(token1.derivedETH) * parseFloat(ethPrice), true)
+    }
+
+    // Return the calculated values
+    return {
+      token0USD: token0USDValue,
+      token1USD: token1USDValue,
+    }
+  }, [platformTokensUSDPrices, token0, token1, ethPrice, token0Rate, token1Rate])
 
   // formatted symbols for overflow
   const formattedSymbol0 = token0?.symbol.length > 6 ? token0?.symbol.slice(0, 5) + '...' : token0?.symbol
