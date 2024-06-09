@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/tbotteam/usdfi-dexv2',
+    uri: 'https://gateway-arbitrum.network.thegraph.com/api/18f13c6deccd15be1836f49ad8cca060/subgraphs/id/EvFsjvtmZpMJ4Y5RdJCx9TD5AkQjXCKpWaTYUvZ2DpWM',
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
